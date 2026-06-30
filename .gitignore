@@ -1,0 +1,15 @@
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.zip
+*.onnx
+*.json
+*.log
+*.db
+*.sqlite
+*.tmp
+*.bak
+Assets/
+Releases/
