@@ -1,15 +1,15 @@
-# Demo Build
+# Runnable Demo
 
-A runnable demo ZIP can be shared separately with employers.
+A runnable Windows demo package is available separately from the source preview.
 
-Recommended sharing flow:
+Recommended review flow:
 
-1. Keep this showcase repository public or private on GitHub.
-2. Upload `ContentSafetyGuard-Demo.zip` as a GitHub Release asset or share it directly with trusted reviewers.
-3. Do not commit the demo ZIP into this repository.
+1. Review the source preview and architecture notes in this repository.
+2. Download the demo package from GitHub Releases.
+3. Start the application locally and explore the UI workflow.
 
-The demo build is intentionally separate from this source-code showcase because the public repository only contains selected code excerpts.
+The repository focuses on readable source structure and documentation. Large runtime assets and selected internal implementation details are provided only where needed for the demo package.
 
 ## Reviewer Note
 
-The executable demonstrates the application workflow. The public source tree is reduced to protect internal product logic.
+The executable demonstrates the application workflow, while this repository highlights selected implementation areas for portfolio review.
