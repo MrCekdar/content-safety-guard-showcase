@@ -1,0 +1,89 @@
+﻿<UserControl x:Class="ContentSafetyGuard.View__Interface_.Sidebar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ContentSafetyGuard.View__Interface_"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <Grid Background="{StaticResource SidebarBackground}">
+        <Border Grid.Column="0"
+                Background="{StaticResource SidebarBackground}"
+                BorderBrush="#1C273A"
+                BorderThickness="0,0,1,0" HorizontalAlignment="Left" Width="81">
+
+            <StackPanel Margin="0,20,0,0"
+                        HorizontalAlignment="Center"
+                        Width="60">
+
+                <Button
+                    x:Name="DashBoardNavButton"
+                     Style="{StaticResource SidebarNavButtonStyle}"
+                    Width="56"
+                    Height="40"
+                    Margin="0,0,0,15"
+                    Background="#1A2538"
+                    BorderBrush="{StaticResource AccentBlue}"
+                    BorderThickness="1"
+                    Click="DashboardButton_Click">
+                    <TextBlock
+                    Text="🛡️"
+                    FontSize="18"
+                    Foreground="{StaticResource AccentBlue}"/>
+                </Button>
+
+                <Button
+                    x:Name="InternetNavButton"
+                     Style="{StaticResource SidebarNavButtonStyle}"
+                    Width="56"
+                    Height="40"
+                    Margin="0,0,0,15"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Click="InternetButton_Click">
+                    <materialDesign:PackIcon Kind="Web" Width="21" Height="21" Foreground="{StaticResource AccentBlue}"/>
+                </Button>
+
+                <Button
+                    x:Name="KiNavButton"
+                     Style="{StaticResource SidebarNavButtonStyle}"
+                    Width="56"
+                    Height="40"
+                    Margin="0,0,0,15"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Click="KiButton_Click">
+                    <materialDesign:PackIcon Kind="Robot" Width="21" Height="21" Foreground="{StaticResource AccentBlue}"/>
+                </Button>
+
+                <Button
+                    x:Name="SettingsNavButton"
+                     Style="{StaticResource SidebarNavButtonStyle}"
+                    Width="56"
+                    Height="40"
+                    Margin="0,0,0,15"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Click="SettingsButton_Click">
+                    <TextBlock Text="⚙️" FontSize="18" Foreground="{StaticResource AccentBlue}"/>
+                </Button>
+
+                <Button
+                    x:Name="InfoNavButton"
+                    Style="{StaticResource SidebarNavButtonStyle}"
+                    Width="56"
+                    Height="40"
+                    Margin="0,0,0,15"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Click="InfoButton_Click">
+                    <TextBlock Text="ℹ️" FontSize="18" Foreground="{StaticResource AccentBlue}"/>
+                </Button>
+
+
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

@@ -1,0 +1,109 @@
+﻿<Window x:Class="ContentSafetyGuard.BlockOverlayWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:ContentSafetyGuard"
+        mc:Ignorable="d"
+        Title="BlockOverlayWindow" 
+        Height="450" Width="800" 
+        WindowState="Maximized" 
+        WindowStyle="None" 
+        Background="#0B131E" 
+        ResizeMode="NoResize" 
+        Topmost="True"
+        FontFamily="Segoe UI">
+
+    <Grid>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+
+            <materialDesign:PackIcon Kind="ShieldLockOutline" 
+                                     Width="80" 
+                                     Height="80" 
+                                     Foreground="#3078E6" 
+                                     HorizontalAlignment="Center" 
+                                     Margin="0,0,0,25"/>
+
+            <TextBlock x:Name="BlockTitleText"
+                       Text="Inhalt blockiert" 
+                       Foreground="#FFFFFF" 
+                       FontSize="32" 
+                       FontWeight="Bold" 
+                       HorizontalAlignment="Center" 
+                       Margin="0,0,0,10"/>
+
+            <TextBlock x:Name="BlockReasonText"
+                       Text="Dieser Bildschirm wurde von Content Safety Guard ausgeblendet." 
+                       Foreground="#3078E6" 
+                       FontSize="16" 
+                       HorizontalAlignment="Center" 
+                       Margin="0,0,0,40"/>
+
+            <Button x:Name="SchutzStop" 
+                        Click="Entsperren_Event"
+                        HorizontalAlignment="Center" 
+                        Width="250" 
+                        Height="45"
+                        Background="Transparent"
+                        BorderBrush="#1C273A"
+                        BorderThickness="1"
+                        Foreground="#8B95A5"
+                        FontWeight="SemiBold"
+                        FontSize="13"
+                        Cursor="Hand"
+                        Content="Entsperren">
+
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="Root"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        CornerRadius="22">  
+                                        <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                                    </Border>
+
+                                    <ControlTemplate.Triggers>
+
+                                        <!-- Hover NUR wenn Button aktiv ist -->
+                                        <MultiTrigger>
+                                            <MultiTrigger.Conditions>
+                                                <Condition Property="IsMouseOver" Value="True"/>
+                                                <Condition Property="IsEnabled" Value="True"/>
+                                            </MultiTrigger.Conditions>
+
+                                            <Setter TargetName="Root"
+                                                Property="Background"
+                                                Value="#FFFFFF"/>
+
+                                            <Setter TargetName="Root"
+                                                Property="BorderBrush"
+                                                Value="#FFFFFF"/>
+
+                                            <!-- Text muss dunkel sein, sonst weiß auf weiß unsichtbar -->
+                                            <Setter Property="Foreground"
+                                            Value="#0B131E"/>
+                                            </MultiTrigger> 
+
+                                            <!-- Zustand während Countdown / disabled -->
+                                            <Trigger Property="IsEnabled" Value="False">
+                                                <Setter Property="Opacity" Value="0.5"/>
+                                                <Setter Property="Foreground" Value="#8B95A5"/>
+                                            </Trigger>
+
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+        </StackPanel>
+    </Grid>
+</Window>

@@ -1,0 +1,51 @@
+<UserControl x:Class="ContentSafetyGuard.View__Interface_.Views.KIView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:views="clr-namespace:ContentSafetyGuard.View__Interface_"
+             xmlns:BlockingBehaviorFolder ="clr-namespace:ContentSafetyGuard.View__Interface_.SettingViewFolder.Cards.BlockingBehavior"
+             xmlns:DetectionFolder="clr-namespace:ContentSafetyGuard.View__Interface_.SettingViewFolder.Cards.Detection"
+             mc:Ignorable="d"
+             d:DesignHeight="720"
+             d:DesignWidth="900">
+
+    <Grid Background="{StaticResource SidebarBackground}">
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled" Style="{StaticResource ViewScrollViewerStyle}">
+
+            <Border>
+
+                <StackPanel>
+
+                    <Grid>
+                        <StackPanel>
+                            <TextBlock Text="AI Detection"
+                                       FontSize="24"
+                                       FontWeight="Bold"
+                                       Foreground="{StaticResource TextPrimary}"/>
+
+                            <TextBlock Text="Tune local detection sensitivity and blocking behavior."
+                                       FontSize="14"
+                                       Foreground="{StaticResource TextSecondary}"
+                                       Margin="0,5,0,15"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <DetectionFolder:DetectionSettingsCard x:Name="KiDetectionSettingsCard"
+                                                          Margin="0,0,0,18"/>
+
+
+                    <BlockingBehaviorFolder:BlockingBehaviorCard  />
+
+                  
+                    
+                </StackPanel>
+
+            </Border>
+
+        </ScrollViewer>
+
+    </Grid>
+</UserControl>

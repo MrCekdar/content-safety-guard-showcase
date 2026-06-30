@@ -1,0 +1,61 @@
+Content Safety Guard - Third Party Notices
+Last checked: 2026-06-15
+
+Bundled production blocklist sources
+===================================
+
+Block List Project
+Source: https://github.com/blocklistproject/Lists
+License: Unlicense
+Commercial use: Allowed by the Unlicense text.
+Attribution: No formal attribution requirement in the Unlicense, but attribution is kept here for transparency.
+Used categories:
+- Adult / Porn
+- Gambling
+- Social Networks
+- Online Gaming
+- Video Streaming
+- Piracy
+- Malware / Phishing
+- Ads / Trackers
+- Drugs
+
+Prepared but not bundled by default
+===================================
+
+HaGeZi DNS Blocklists
+Source: https://github.com/hagezi/dns-blocklists
+License: GPL-3.0
+Status: Importer support prepared, not bundled in production by default.
+Reason: GPL-3.0 obligations need legal/product review before commercial distribution.
+
+OISD
+Source: https://oisd.nl/
+License: Unclear from the public site during review.
+Status: Importer support prepared, not bundled in production by default.
+Reason: License and commercial redistribution terms need upstream/legal confirmation.
+
+StevenBlack hosts
+Source: https://github.com/StevenBlack/hosts
+License: MIT
+Status: Importer support prepared, not bundled in production by default.
+Reason: Repository license is permissive, but upstream aggregated source licensing should be reviewed before bundling.
+
+Mullvad DNS Blocklists
+Source: https://github.com/mullvad/dns-blocklists
+License: GPL-3.0
+Status: Importer support prepared, not bundled in production by default.
+Reason: GPL-3.0 obligations need legal/product review before commercial distribution.
+
+AdGuard DNS Filter
+Source: https://github.com/AdguardTeam/AdGuardSDNSFilter
+License: GPL-3.0
+Status: Importer support prepared, not bundled in production by default.
+Reason: GPL-3.0 obligations need legal/product review before commercial distribution.
+
+AI model notices
+================
+
+Falconsai/nsfw_image_detection
+Source: https://huggingface.co/Falconsai/nsfw_image_detection
+License: Apache-2.0

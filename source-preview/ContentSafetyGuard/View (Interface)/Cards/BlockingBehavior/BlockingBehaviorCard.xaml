@@ -1,0 +1,92 @@
+﻿<UserControl x:Class="ContentSafetyGuard.View__Interface_.SettingViewFolder.Cards.BlockingBehavior.BlockingBehaviorCard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ContentSafetyGuard.View__Interface_.SettingViewFolder.Cards"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="1000" d:DesignWidth="800">
+    
+    <UserControl.Resources>
+        <Style TargetType="{x:Type Border}" x:Key="SettingItemBorder">
+            <Setter Property="BorderBrush" Value="#1C273A"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="Padding" Value="0,15"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Border Style="{DynamicResource CardStyle}">
+            <StackPanel>
+                <!-- Header -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                    <materialDesign:PackIcon Kind="EyeOffOutline" Foreground="{DynamicResource TextSecondary}" VerticalAlignment="Center" Width="18" Height="18"/>
+                    <TextBlock Text="BLOCKING BEHAVIOR" FontSize="13" Foreground="{DynamicResource TextSecondary}" FontWeight="SemiBold" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <Border Style="{StaticResource SettingItemBorder}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Margin="0,0,15,0">
+                                <TextBlock Text="Close program when detected" FontSize="14" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimary}"/>
+                                <TextBlock Text="Automatically close the detected application or website tab when the block overlay triggers." FontSize="12" Foreground="{DynamicResource TextSecondary}" Margin="0,2,0,0" TextWrapping="Wrap"/>
+                            </StackPanel>
+                            <ToggleButton x:Name="CloseProgramToggle"
+                                          Grid.Column="1"
+                                          Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                          IsChecked="False"
+                                          VerticalAlignment="Center"
+                                          Checked="CloseProgramToggle_Checked"
+                                          Unchecked="CloseProgramToggle_Unchecked"/>
+                        </Grid>
+                    </Border>
+
+                <!-- Setting: Unlock Delay -->
+                <Border Style="{StaticResource SettingItemBorder}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Unlock Delay" FontSize="14" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimary}"/>
+                            <TextBlock Text="Wait time before you can dismiss a block" FontSize="12" Foreground="{DynamicResource TextSecondary}" Margin="0,2,0,0"/>
+                        </StackPanel>
+                        <ComboBox x:Name ="UnlockDelayComboBox" Style ="{StaticResource DarkComboBoxStyle}" Grid.Column="1" 
+                                  materialDesign:TextFieldAssist.HasClearButton="False" Width="110" Foreground="{DynamicResource TextSecondary}" BorderThickness="0" 
+                                  Background="#1A2538" Padding="10,8" 
+                                  materialDesign:TextFieldAssist.UnderlineBrush="Transparent" SelectedIndex="0" SelectionChanged="UnlockDelayComboBox_SelectionChanged">
+                            <ComboBoxItem Content="15 seconds" Tag="15"/>
+                            <ComboBoxItem Content="30 seconds" Tag="30"/>
+                            <ComboBoxItem Content="1 minute" Tag="60"/>
+                        </ComboBox>
+                    </Grid>
+                </Border>
+
+                <!-- Setting: Sound Alerts -->
+                <Border Style="{StaticResource SettingItemBorder}" BorderThickness="0" Padding="0,15,0,0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Sound Alerts" FontSize="14" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimary}"/>
+                            <TextBlock Text="Play a subtle chime when content is blocked" FontSize="12" Foreground="{DynamicResource TextSecondary}" Margin="0,2,0,0"/>
+                        </StackPanel>
+                        <ToggleButton x:Name="SoundAlertsToggle"
+                                      Grid.Column="1"
+                                      Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                      IsChecked="False"
+                                      Checked="SoundAlertsToggle_Checked"
+                                      Unchecked="SoundAlertsToggle_Unchecked"/>
+                    </Grid>
+                </Border>
+
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

@@ -1,0 +1,127 @@
+﻿<UserControl x:Class="ContentSafetyGuard.View__Interface_.SettingViewFolder.Cards.FocusMode.FocusModeCard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:ContentSafetyGuard.View__Interface_.SettingViewFolder.Cards.FocusMode"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    
+    <UserControl.Resources>
+        <Style TargetType="{x:Type Border}" x:Key="SettingItemBorder">
+            <Setter Property="BorderBrush" Value="#1C273A"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="Padding" Value="0,15"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <Border Style="{DynamicResource CardStyle}">
+            <StackPanel>
+                <!-- Header -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                    <materialDesign:PackIcon Kind="LightningBolt" Foreground="{DynamicResource TextSecondary}" VerticalAlignment="Center" Width="18" Height="18"/>
+                    <TextBlock Text="FOCUS MODE" FontSize="13" Foreground="{DynamicResource TextSecondary}" FontWeight="SemiBold" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <!-- Setting: Enable Focus Mode -->
+                <Border Style="{StaticResource SettingItemBorder}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Enable Focus Mode" FontSize="14" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimary}"/>
+                            <TextBlock Text="Temporarily blocks all distracting applications" FontSize="12" Foreground="{DynamicResource TextSecondary}" Margin="0,2,0,0"/>
+                        </StackPanel>
+                        <ToggleButton x:Name="FocusModeToggle" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" Checked="FocusModeToggle_Checked" Unchecked="FocusModeToggle_Unchecked"/>
+                    </Grid>
+                </Border>
+
+                <!-- Setting: Session Duration -->
+                <Border Style="{StaticResource SettingItemBorder}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Session Duration" FontSize="14" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimary}"/>
+                            <TextBlock Text="Length of a single focus block" FontSize="12" Foreground="{DynamicResource TextSecondary}" Margin="0,2,0,0"/>
+                        </StackPanel>
+                        <ComboBox Padding="0,0,10,0" Style ="{StaticResource DarkComboBoxStyle}" x:Name="SessionDurationComboBox" Grid.Column="1" materialDesign:TextFieldAssist.HasClearButton="False" Width="120" Foreground="{DynamicResource TextSecondary}" BorderThickness="0" Background="#1A2538" materialDesign:TextFieldAssist.UnderlineBrush="Transparent" SelectionChanged="FocusModeSetting_Changed">
+                            <ComboBoxItem Content="1 minute" Tag="1"/>
+                            <ComboBoxItem Content="5 minutes" Tag="5"/>
+                            <ComboBoxItem Content="10 minutes" Tag="10"/>
+                            <ComboBoxItem Content="15 minutes" Tag="15"/>
+                            <ComboBoxItem Content="30 minutes" Tag="30"/>
+                            <ComboBoxItem Content="45 minutes" Tag="45"/>
+                            <ComboBoxItem Content="60 minutes" Tag="60"/>
+                            <ComboBoxItem Content="90 minutes" Tag="90"/>
+                        </ComboBox>
+                    </Grid>
+                </Border>
+
+                <!-- Setting: Break Reminders -->
+                <Border Style="{StaticResource SettingItemBorder}" BorderThickness="0" Padding="0,15,0,25">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Break Reminders" FontSize="14" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimary}"/>
+                            <TextBlock Text="Notify me when it's time to take a break" FontSize="12" Foreground="{DynamicResource TextSecondary}" Margin="0,2,0,0"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                            <ComboBox  Style ="{StaticResource DarkComboBoxStyle}" x:Name="BreakReminderIntervalComboBox" materialDesign:TextFieldAssist.HasClearButton="False" Width="120" Foreground="{DynamicResource TextSecondary}" BorderThickness="0" Background="#1A2538" Padding="10,8" materialDesign:TextFieldAssist.UnderlineBrush="Transparent" SelectionChanged="FocusModeSetting_Changed">
+                                <ComboBoxItem Content="1 minute" Tag="1"/>
+                                <ComboBoxItem Content="5 minutes" Tag="5"/>
+                                <ComboBoxItem Content="10 minutes" Tag="10"/>
+                                <ComboBoxItem Content="15 minutes" Tag="15"/>
+                                <ComboBoxItem Content="30 minutes" Tag="30"/>
+                            </ComboBox>
+
+                            <ToggleButton x:Name="BreakReminderToggle" Style="{StaticResource MaterialDesignSwitchToggleButton}" Margin="14,0,0,0" Checked="BreakReminderToggle_Changed" Unchecked="BreakReminderToggle_Changed"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- Allowed Exceptions -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Blocked Apps"
+                           FontSize="14"
+                           FontWeight="SemiBold"
+                           Foreground="{DynamicResource TextPrimary}"/>
+
+                         <TextBlock Text="Apps and websites that being blocked by Focus Mode restrictions."
+                           FontSize="12"
+                           Foreground="{DynamicResource TextSecondary}"
+                           Margin="0,2,0,10"/>
+                    </StackPanel>
+
+                    <Button Grid.Column="1"
+                        x:Name="Manage_Exceptions"
+                        Content="Mange Blocking"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Style="{StaticResource BUTTON}"
+                        Background="#1A2538"
+                        BorderThickness="0"
+                        Foreground="{DynamicResource TextPrimary}"
+                        materialDesign:ButtonAssist.CornerRadius="6"
+                        Click="Manage_Exceptions_Click"/>   
+                </Grid>
+
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

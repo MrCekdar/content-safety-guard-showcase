@@ -1,0 +1,450 @@
+﻿<Window
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:main="clr-namespace:ContentSafetyGuard.View__Interface_"
+    xmlns:views="clr-namespace:ContentSafetyGuard.View__Interface_.Views"
+    xmlns:cards="clr-namespace:ContentSafetyGuard.View__Interface_.SettingViewFolder.Cards"
+    xmlns:DetectionFolder ="clr-namespace:ContentSafetyGuard.View__Interface_.SettingViewFolder.Cards.Detection"
+    xmlns:ScreenTimeFolder="clr-namespace:ContentSafetyGuard.View__Interface_.SettingViewFolder.Cards.ScreenTime"
+    xmlns:SettingFolder="clr-namespace:ContentSafetyGuard.View__Interface_.SettingViewFolder"
+    xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
+    mc:Ignorable="d"
+    x:Class="ContentSafetyGuard.MainWindow"
+    Title="Content Safety Guard v1.0.0"
+    Height="720"
+    Width="1080"
+    Background="#0B131E"
+    FontFamily="Segoe UI"
+    WindowStyle="None"
+    ResizeMode="CanResize"
+    StateChanged="Window_StateChanged">
+
+    <shell:WindowChrome.WindowChrome>
+        <shell:WindowChrome
+            CaptionHeight="0"
+            ResizeBorderThickness="6"
+            CornerRadius="0"
+            GlassFrameThickness="0"
+            UseAeroCaptionButtons="False" />
+    </shell:WindowChrome.WindowChrome>
+
+    <Window.Resources>
+        <SolidColorBrush x:Key="PanelBackground" Color="#131C2B"/>
+        <SolidColorBrush x:Key="SidebarBackground" Color="#0B131E"/>
+        <SolidColorBrush x:Key="AccentBlue" Color="#3078E6"/>
+        <SolidColorBrush x:Key="TextPrimary" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="TextSecondary" Color="#8B95A5"/>
+        <SolidColorBrush x:Key="DangerRed" Color="#FF6B6B"/>
+
+
+        <Storyboard x:Key="PulseStatusDotStoryboard" RepeatBehavior="Forever" AutoReverse="True">
+            <DoubleAnimation Storyboard.TargetName="StatusDotScale"
+                     Storyboard.TargetProperty="ScaleX"
+                     From="0.8"
+                     To="1.35"
+                     Duration="0:0:0.7"/>
+
+            <DoubleAnimation Storyboard.TargetName="StatusDotScale"
+                     Storyboard.TargetProperty="ScaleY"
+                     From="0.8"
+                     To="1.35"
+                     Duration="0:0:0.7"/>
+
+            <DoubleAnimation Storyboard.TargetName="StatusDot"
+                     Storyboard.TargetProperty="Opacity"
+                     From="0.65"
+                     To="1.0"
+                     Duration="0:0:0.7"/>
+        </Storyboard>
+
+        <Style TargetType="{x:Type Border}" x:Key="SettingItemBorder">
+            <Setter Property="BorderBrush" Value="#1C273A"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="Padding" Value="0,15"/>
+        </Style>
+
+        <Style TargetType="{x:Type Border}" x:Key="CardStyle">
+            <Setter Property="Background" Value="{StaticResource PanelBackground}"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Margin" Value="0,0,0,15"/>
+        </Style>
+
+        <!-- Normale TitleBar Buttons -->
+        <Style x:Key="TitleBarButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="46"/>
+            <Setter Property="Height" Value="36"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#D6DBE4"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Focusable" Value="False"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#1E2A3D"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Close Button extra -->
+        <Style x:Key="CloseTitleBarButtonStyle"
+               TargetType="Button"
+               BasedOn="{StaticResource TitleBarButtonStyle}">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#E81123"/>
+                    <Setter Property="Foreground" Value="White"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- CUSTOM TITLE BAR -->
+        <Grid Grid.Row="0"
+              Background="#0F1724"
+              MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Left side -->
+            <StackPanel Orientation="Horizontal"
+                        
+                        VerticalAlignment="Center"
+                        Margin="14,0,0,0">
+                <TextBlock Text="🛡️"
+                           FontSize="16"
+                           Margin="0,0,10,0"
+                           Foreground="{StaticResource AccentBlue}"
+                           VerticalAlignment="Center"/>
+                            
+                <TextBlock Text="Content Safety Guard"
+                           Foreground="{StaticResource TextPrimary}"
+                           FontSize="13"
+                           FontWeight="SemiBold"
+                           VerticalAlignment="Center"/>
+            </StackPanel>
+
+            <!-- Right side buttons -->
+            <StackPanel Grid.Column="1"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+
+                <Button Style="{StaticResource TitleBarButtonStyle}"
+                        Click="MinimizeButton_Click">
+                    <materialDesign:PackIcon Kind="WindowMinimize"
+                                             Width="18"
+                                             Height="18"/>
+                </Button>
+
+                <Button Style="{StaticResource TitleBarButtonStyle}"
+                        Click="MaximizeRestoreButton_Click">
+                    <materialDesign:PackIcon x:Name="MaximizeIcon"
+                                             Kind="WindowMaximize"
+                                             Width="16"
+                                             Height="16"/>
+                </Button>
+
+                <Button Style="{StaticResource CloseTitleBarButtonStyle}"
+                        Click="CloseButton_Click">
+                    <materialDesign:PackIcon Kind="Close"
+                                             Width="18"
+                                             Height="18"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="1">
+
+            <!-- SIDEBAR -->
+            <main:Sidebar x:Name="Sidebar" Grid.Column="0"/>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- MAIN CONTENT AREA -->
+                <Grid Grid.Column="1" Margin="30,20,13,20">
+
+
+                    <!-- DASHBOARD VIEW -->
+                    <ScrollViewer x:Name="DashboardView" Style="{StaticResource ViewScrollViewerStyle}">
+
+                        <StackPanel>
+
+                            <Grid>
+                                    <StackPanel>
+                                        <TextBlock Text="Dashboard"
+                                                   FontSize="24"
+                                                   FontWeight="Bold"
+                                                   Foreground="{StaticResource TextPrimary}"/>
+
+                                        <TextBlock Text="Real-time content protection status"
+                                                   FontSize="14"
+                                                   Foreground="{StaticResource TextSecondary}"
+                                                   Margin="0,5,0,0"/>
+                                    </StackPanel>
+
+                                    <Border HorizontalAlignment="Right"
+                                            x:Name="StatusFarbe"
+                                            VerticalAlignment="Top"
+                                            Background="#1C273A"
+                                            CornerRadius="15"
+                                            Padding="14,6">
+
+                                        <StackPanel Orientation="Horizontal"
+                                                VerticalAlignment="Center">
+
+                                            <Ellipse x:Name="StatusDot"
+                                                 Width="8"
+                                                 Height="8"
+                                                 Fill="{StaticResource TextSecondary}"
+                                                 VerticalAlignment="Center"
+                                                 Margin="0,0,8,0"
+                                                 RenderTransformOrigin="0.5,0.5">
+                                                <Ellipse.RenderTransform>
+                                                    <ScaleTransform x:Name="StatusDotScale"
+                                                        ScaleX="1"
+                                                        ScaleY="1"/>            
+                                                </Ellipse.RenderTransform>
+                                            </Ellipse>
+
+                                            <TextBlock x:Name="Status_Text"
+                                               Text="INACTIVE"
+                                               Foreground="{StaticResource TextSecondary}"
+                                               FontSize="12"
+                                               FontWeight="SemiBold"
+                                               VerticalAlignment="Center"/> 
+                                        </StackPanel>
+                                    </Border>
+                                </Grid>
+                            
+                            
+                                <Border x:Name="ProtectionCard"
+                                    MinHeight="210"
+                                    CornerRadius="18"
+                                    BorderBrush="#244B7A"
+                                    BorderThickness="1"
+                                    Padding="0"
+                                    Margin="0,10,0,15"
+                                    ClipToBounds="True"
+                                    SizeChanged="ProtectionCard_SizeChanged">   
+
+                                    <Border.Background>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                            <GradientStop Color="#101C2E" Offset="0"/>
+                                            <GradientStop Color="#101A2A" Offset="0.55"/>
+                                            <GradientStop Color="#13283A" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Border.Background>
+
+                                <Grid>
+                                    <!-- großer Hintergrund-Glow rechts -->
+                                        <Ellipse x:Name="ProtectionGlow"
+                                         Width="260"
+                                         Height="260"
+                                         Fill="#3078E6"
+                                         Opacity="0.13"
+                                         HorizontalAlignment="Right"
+                                         VerticalAlignment="Top"
+                                         Margin="0,-85,-75,0"/>
+
+                                        <!-- kleiner Glow links unten -->
+                                    <Ellipse x:Name="ProtectionGlowSmall"
+                                             Width="180"
+                                             Height="180"
+                                             Fill="#3078E6"
+                                             Opacity="0.07"
+                                             HorizontalAlignment="Left"
+                                             VerticalAlignment="Bottom"
+                                             Margin="-90,0,0,-100"/>    
+
+                                    <!-- Inhalt -->
+                                        <Grid Margin="28">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="26"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+
+                                            <!-- TOP CONTENT -->
+                                            <StackPanel Grid.Row="0"
+                                                    Orientation="Horizontal">
+
+                                                <Border x:Name="ShieldBox"
+                                                        Width="90"
+                                                        Height="90"
+                                                        Background="#12284A"
+                                                        BorderBrush="#244B7A"
+                                                        BorderThickness="1"
+                                                        CornerRadius="18"
+                                                        Margin="0,0,28,0">
+
+                                                <materialDesign:PackIcon x:Name="ShieldIcon"
+                                                         Kind="ShieldOffOutline"
+                                                         Width="42"
+                                                         Height="42"
+                                                         Foreground="#4A76AD"
+                                                         HorizontalAlignment="Center"
+                                                         VerticalAlignment="Center"/>   
+                                            </Border>
+
+                                                <StackPanel VerticalAlignment="Center">
+                                                <TextBlock x:Name="ProtectionTitleText"
+                                                   Text="Protection Inactive"
+                                                   FontSize="24"
+                                                   FontWeight="Bold"
+                                                   Foreground="{StaticResource TextPrimary}"/>
+
+                                                <TextBlock x:Name="ProtectionDescriptionText"
+                                                       Text="Click Start Protection to begin monitoring your screen."
+                                                       FontSize="14"
+                                                       Foreground="{StaticResource TextSecondary}"
+                                                       Margin="0,8,0,0"/>
+
+                                                <TextBlock x:Name="ProtectionStatusSmallText"
+                                                   Text="Ready to start"
+                                                   FontSize="13"
+                                                   FontWeight="SemiBold"
+                                                   Foreground="{StaticResource TextSecondary}"
+                                                   Margin="0,12,0,0"/>  
+                                            </StackPanel>
+                                            </StackPanel>
+
+                                            <!-- BUTTONS -->
+                                            <Grid Grid.Row="2">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="16"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <!-- START / STOP BUTTON -->
+                                                <Button Grid.Column="0"
+                                                    x:Name="ProtectionToggleButton"
+                                                    Background="{StaticResource AccentBlue}"
+                                                    Foreground="White"
+                                                    Padding="22,10"
+                                                    BorderThickness="0"
+                                                    Cursor="Hand"
+                                                    Height="50"
+                                                    Click="ProtectionToggleButton_Click">
+
+                                                    <Button.Template>
+                                                        <ControlTemplate TargetType="Button">
+                                                        <Border x:Name="Root"
+                                                            Background="{TemplateBinding Background}"
+                                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                                            CornerRadius="9"
+                                                            Padding="{TemplateBinding Padding}">        
+
+                                                            <ContentPresenter HorizontalAlignment="Center"
+                                                      VerticalAlignment="Center"/>
+                                                            </Border>
+                                                        </ControlTemplate>
+                                                    </Button.Template>
+
+                                                    <StackPanel Orientation="Horizontal"
+                                    VerticalAlignment="Center">
+
+                                                    <materialDesign:PackIcon x:Name="ProtectionToggleIcon"
+                                                         Width="16"
+                                                         Height="16"
+                                                         Kind="Play"
+                                                         Margin="0,0,8,0"
+                                                         VerticalAlignment="Center"
+                                                         Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+
+                                                    <TextBlock x:Name="ProtectionToggleText"
+                                                           Text="Start Protection"
+                                                           VerticalAlignment="Center"
+                                                           FontWeight="SemiBold"/>  
+                                                </StackPanel>
+                                                </Button>
+
+                                                <!-- TEST BUTTON -->
+                                            <Button Grid.Column="4"
+                                                    Background="Transparent"
+                                                    Foreground="{StaticResource AccentBlue}"
+                                                    Padding="22,10"
+                                                    BorderBrush="#2A3548"
+                                                    BorderThickness="1"
+                                                    Height="46"
+                                                    Cursor="Hand"
+                                                    Click="Blockieren_testen">      
+
+                                                <Button.Template>
+                                                        <ControlTemplate TargetType="Button">
+                                                        <Border x:Name="Root"
+                                                        Background="{TemplateBinding Background}"
+                                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                                        CornerRadius="9"
+                                                        Padding="{TemplateBinding Padding}">    
+                                                            <ContentPresenter HorizontalAlignment="Center"
+                                                      VerticalAlignment="Center"/>
+                                                            </Border>
+                                                        </ControlTemplate>
+                                                    </Button.Template>
+
+                                                    <StackPanel Orientation="Horizontal"
+                                    VerticalAlignment="Center">
+
+                                                        <materialDesign:PackIcon Kind="Monitor"
+                                                     Width="17"
+                                                     Height="17"
+                                                     Margin="0,0,8,0"
+                                                     Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+
+                                                        <TextBlock Text="Test Blocking Overlay"
+                                       FontWeight="SemiBold"/>
+                                                    </StackPanel>
+                                                </Button>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                </Border>
+
+                                <ScreenTimeFolder:ScreenTimeCard x:Name="DashboardScreenTimeCard"/>
+
+                                <DetectionFolder:DetectionSettingsCard x:Name="DashboardDetectionSettingsCard"/>
+                            
+                            </StackPanel>
+                        
+                    </ScrollViewer>
+
+                    <views:InternetView x:Name="InternetView" Visibility="Collapsed"/>
+                    <views:KIView x:Name="KiView" Visibility="Collapsed"/>
+                    <SettingFolder:SettingView x:Name="SettingView" Visibility="Collapsed"/>
+                    <views:InfoView x:Name="InfoView" Visibility="Collapsed"/>
+                    
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

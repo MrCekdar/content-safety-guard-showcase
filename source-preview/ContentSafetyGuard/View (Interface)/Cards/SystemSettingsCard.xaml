@@ -1,0 +1,163 @@
+﻿<UserControl x:Class="ContentSafetyGuard.View__Interface_.SettingViewFolder.Cards.SystemSettingsCard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ContentSafetyGuard.View__Interface_.SettingViewFolder.Cards"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    
+    <UserControl.Resources>
+        <Style TargetType="{x:Type Border}" x:Key="SettingItemBorder">
+            <Setter Property="BorderBrush" Value="#1C273A"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="Padding" Value="0,15"/>
+        </Style>
+
+        <Style x:Key="SoftSecondaryButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Height" Value="45"/>
+            <Setter Property="Padding" Value="12,5"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Background" Value="#162234"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextSecondary}"/>
+            <Setter Property="BorderBrush" Value="#22324A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="Root"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="6">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"
+                                      Margin="{TemplateBinding Padding}"/>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Root" Property="Background" Value="#1A2A40"/>
+                                <Setter TargetName="Root" Property="BorderBrush" Value="#2A3D5A"/>
+                                <Setter Property="Foreground" Value="#B7C2D3"/>
+                            </Trigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Root" Property="Background" Value="#132033"/>
+                                <Setter TargetName="Root" Property="BorderBrush" Value="#30435F"/>
+                            </Trigger>
+
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.45"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <Border Style="{DynamicResource CardStyle}">
+            <StackPanel>
+                <!-- Header -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                    <materialDesign:PackIcon Kind="CodeGreaterThan" Foreground="{DynamicResource TextSecondary}" VerticalAlignment="Center" Width="18" Height="18"/>
+                    <TextBlock Text="SYSTEM SETTINGS" FontSize="13" Foreground="{DynamicResource TextSecondary}" FontWeight="SemiBold" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <!-- Setting: Start with Windows -->
+                <Border Style="{StaticResource SettingItemBorder}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Start with Windows" FontSize="14" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimary}"/>
+                            <TextBlock Text="Automatically launch app on boot" FontSize="12" Foreground="{DynamicResource TextSecondary}" Margin="0,2,0,0"/>
+                        </StackPanel>
+                        <ToggleButton x:Name="StartWithWindowsToggle"
+                                      Grid.Column="1"
+                                      Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                      IsChecked="False"
+                                      Checked="StartWithWindowsToggle_Checked"
+                                      Unchecked="StartWithWindowsToggle_Unchecked"/>
+                    </Grid>
+                </Border>
+
+                <!-- Setting: Run as Administrator -->
+                <Border Style="{StaticResource SettingItemBorder}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Run as Administrator" FontSize="14" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimary}"/>
+                            <TextBlock Text="Remember that protection providers may need elevated permissions later" FontSize="12" Foreground="{DynamicResource TextSecondary}" Margin="0,2,0,0"/>
+                        </StackPanel>
+                        <ToggleButton x:Name="RunAsAdministratorToggle"
+                                      Grid.Column="1"
+                                      Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                      IsChecked="False"
+                                      Checked="RunAsAdministratorToggle_Checked"
+                                      Unchecked="RunAsAdministratorToggle_Unchecked"/>
+                    </Grid>
+                </Border>
+
+                <!-- Setting: Run minimized -->
+                <Border Style="{StaticResource SettingItemBorder}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Run minimized" FontSize="14" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimary}"/>
+                            <TextBlock Text="Start quietly in the system tray" FontSize="12" Foreground="{DynamicResource TextSecondary}" Margin="0,2,0,0"/>
+                        </StackPanel>
+                        <ToggleButton x:Name="RunMinimizedToggle"
+                                      Grid.Column="1"
+                                      Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                      IsChecked="False"
+                                      Checked="RunMinimizedToggle_Checked"
+                                      Unchecked="RunMinimizedToggle_Unchecked"/>
+                    </Grid>
+                </Border>
+
+                <!-- Setting: Show tray icon -->
+                <Border Style="{StaticResource SettingItemBorder}" BorderThickness="0" Padding="0,15,0,25">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Show tray icon" FontSize="14" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimary}"/>
+                            <TextBlock Text="Display icon in the taskbar notification area" FontSize="12" Foreground="{DynamicResource TextSecondary}" Margin="0,2,0,0"/>
+                        </StackPanel>
+                        <ToggleButton x:Name="ShowTrayIconToggle"
+                                      Grid.Column="1"
+                                      Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                      IsChecked="True"
+                                      Checked="ShowTrayIconToggle_Checked"
+                                      Unchecked="ShowTrayIconToggle_Unchecked"/>
+                    </Grid>
+                </Border>
+
+                <!-- Check for updates Button -->
+                <Button Style="{StaticResource SoftSecondaryButtonStyle}" HorizontalAlignment="Left" Background="#162234" BorderThickness="0" Foreground="{DynamicResource TextPrimary}" materialDesign:ButtonAssist.CornerRadius="6" Padding="12,5" Height="45">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="CloudDownloadOutline" VerticalAlignment="Center" Margin="0,0,8,0" Width="18" Height="18" Foreground="{DynamicResource TextSecondary}"/>
+                        <TextBlock Text="Check for updates" VerticalAlignment="Center" Foreground="{DynamicResource TextSecondary}" FontSize="13"/>
+                    </StackPanel>
+                </Button>
+
+
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

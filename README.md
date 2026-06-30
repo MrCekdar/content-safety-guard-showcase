@@ -2,7 +2,7 @@
 
 Content Safety Guard is a Windows desktop application prototype built with C# and WPF. It demonstrates local content-safety features such as screen capture analysis, ONNX Runtime inference, configurable protection settings, and a blocking overlay.
 
-This repository is a selected portfolio version. Some internal modules, datasets, blocking providers, category importers, and commercial logic are intentionally omitted.
+This repository is a selected portfolio version. It now includes a larger source preview with the application shell, WPF views, settings services, screen-time logic, focus-mode logic, and local AI scanning flow. Some internal modules, datasets, blocking providers, category importers, and commercial logic are intentionally omitted.
 
 ## What This Showcase Demonstrates
 
@@ -34,6 +34,20 @@ src-excerpts/
     BlockOverlayWindow.xaml
     BlockOverlayWindow.xaml.cs
 ```
+
+## Larger Source Preview
+
+```text
+source-preview/ContentSafetyGuard/
+  App.xaml
+  MainWindow.xaml
+  AI/
+  Services/
+  State/
+  View (Interface)/
+```
+
+This folder mirrors more of the real project structure for code review. It is still a preview, not the full product repository. Folders with omitted internal code contain `OMITTED.md` files.
 
 ## Intentionally Omitted
 

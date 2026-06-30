@@ -23,3 +23,5 @@ User starts protection
 ## Notes For Reviewers
 
 This showcase is intentionally reduced. It is designed to demonstrate software structure and implementation style without publishing the full product codebase.
+
+The `source-preview/ContentSafetyGuard` folder contains a broader project snapshot for orientation. It is not intended to replace the runnable demo ZIP, because model files, generated datasets, and selected internal modules are omitted from the public repository.

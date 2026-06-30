@@ -1,0 +1,445 @@
+﻿<UserControl x:Class="ContentSafetyGuard.View__Interface_.SettingViewFolder.Cards.Detection.DetectionSettingsCard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:ContentSafetyGuard.View__Interface_"
+             mc:Ignorable="d" 
+             d:DesignWidth="800"
+             d:DesignHeight="2000">
+
+    <UserControl.Resources>
+        <Style x:Key="ModernSliderStyle" TargetType="{x:Type Slider}">
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="Foreground" Value="{DynamicResource AccentBlue}"/>
+            <Setter Property="Background" Value="#2A3548"/>
+            <!-- Etwas hellerer Hintergrund für mehr Tiefe im Dark Mode -->
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Slider}">
+                        <!-- Transparenter Hintergrund verbessert die Klickbarkeit (Hit-Testing) in der gesamten Höhe -->
+                        <Border Background="Transparent">
+                            <Grid VerticalAlignment="Center">
+                                <Track x:Name="PART_Track" Height="24">
+
+                                    <!-- Linker, aktiver Teil (aufgefüllt) -->
+                                    <Track.DecreaseRepeatButton>
+                                        <RepeatButton Command="{x:Static Slider.DecreaseLarge}"
+                                                  Height="4"
+                                                  Background="{TemplateBinding Foreground}"
+                                                  BorderThickness="0">
+                                            <RepeatButton.Template>
+                                                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                                                    <!-- Nur links abgerundet, rechts verdeckt der Thumb den Übergang -->
+                                                    <Border Background="{TemplateBinding Background}"
+                                                        CornerRadius="2,0,0,2"/>
+                                                </ControlTemplate>
+                                            </RepeatButton.Template>
+                                        </RepeatButton>
+                                    </Track.DecreaseRepeatButton>
+
+                                    <!-- Rechter, inaktiver Teil (leer) -->
+                                    <Track.IncreaseRepeatButton>
+                                        <RepeatButton Command="{x:Static Slider.IncreaseLarge}"
+                                                  Height="4"
+                                                  Background="{TemplateBinding Background}"
+                                                  BorderThickness="0">
+                                            <RepeatButton.Template>
+                                                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                                                    <!-- Nur rechts abgerundet -->
+                                                    <Border Background="{TemplateBinding Background}"
+                                                        CornerRadius="0,2,2,0"/>
+                                                </ControlTemplate>
+                                            </RepeatButton.Template>
+                                        </RepeatButton>
+                                    </Track.IncreaseRepeatButton>
+
+                                    <!-- Der verschiebbare Knopf (Thumb) -->
+                                    <Track.Thumb>
+                                        <Thumb Width="20" Height="20">
+                                            <Thumb.Template>
+                                                <ControlTemplate TargetType="{x:Type Thumb}">
+                                                    <Grid>
+                                                        <!-- Halo-Effekt (anfangs unsichtbar) -->
+                                                        <Ellipse x:Name="Halo"
+                                                             Fill="{TemplateBinding Background}"
+                                                             Opacity="0"
+                                                             Margin="-8"
+                                                             IsHitTestVisible="False"/>
+
+                                                        <!-- Eigentlicher Knopf -->
+                                                        <Ellipse x:Name="Knob"
+                                                             Fill="White"
+                                                             Stroke="{TemplateBinding Background}"
+                                                             StrokeThickness="2">
+                                                            <Ellipse.Effect>
+                                                                <DropShadowEffect BlurRadius="6" ShadowDepth="2" Direction="270" Color="Black" Opacity="0.3"/>
+                                                            </Ellipse.Effect>
+                                                        </Ellipse>
+                                                    </Grid>
+
+                                                    <!-- Interaktive Animationen für den Thumb -->
+                                                    <ControlTemplate.Triggers>
+                                                        <!-- Hover-Zustand -->
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter TargetName="Halo" Property="Opacity" Value="0.15"/>
+                                                            <Setter TargetName="Halo" Property="Fill" Value="{DynamicResource AccentBlue}"/>
+                                                            <Setter TargetName="Knob" Property="Stroke" Value="{DynamicResource AccentBlue}"/>
+                                                        </Trigger>
+
+                                                        <!-- Dragging (Ziehen) Zustand -->
+                                                        <Trigger Property="IsDragging" Value="True">
+                                                            <Setter TargetName="Halo" Property="Opacity" Value="0.3"/>
+                                                            <Setter TargetName="Halo" Property="Fill" Value="{DynamicResource AccentBlue}"/>
+                                                            <Setter TargetName="Knob" Property="Fill" Value="#F8F9FA"/>
+                                                            <!-- Leichtes Grau beim Drücken -->
+                                                            <Setter TargetName="Knob" Property="StrokeThickness" Value="3"/>
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Thumb.Template>
+                                        </Thumb>
+                                    </Track.Thumb>
+
+                                </Track>
+                            </Grid>
+                        </Border>
+
+                        <!-- Deaktivierter Zustand für den gesamten Slider -->
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.4"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="SegmentedRadioButtonStyle" TargetType="RadioButton">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource TextSecondary}"/>
+            <Setter Property="Padding" Value="16,8"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border Background="{TemplateBinding Background}"
+                        CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                      VerticalAlignment="Center" 
+                                      Margin="{TemplateBinding Padding}"/>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Background" Value="{DynamicResource AccentBlue}"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                    <Condition Property="IsChecked" Value="False"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Background" Value="#2A3548"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </MultiTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Border Style="{StaticResource CardStyle}" Margin="-3,-3,-3,-3">
+        <StackPanel>
+            <TextBlock Text="⚙️ DETECTION SETTINGS"
+                                    FontSize="12"
+                                    Foreground="{StaticResource TextSecondary}"
+                                    FontWeight="Bold"
+                                    Margin="0,0,0,20"/>
+
+            <Grid Margin="0,0,0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="AI Enabled"
+                FontSize="14"
+                FontWeight="SemiBold"
+                Foreground="{StaticResource TextPrimary}"/>
+
+                    <TextBlock Text="Activated or Deactivates AI"
+                FontSize="12"
+                Foreground="{StaticResource TextSecondary}"/>
+                </StackPanel>
+
+                <ToggleButton
+                 x:Name="AIScanningToggle"
+                 Grid.Column="1"
+                 VerticalAlignment="Center"
+                 Style="{StaticResource MaterialDesignSwitchToggleButton}" Checked="AIScanningToggle_Checked" Unchecked="AIScanningToggle_Unchecked"/>
+            </Grid>
+
+
+            <Separator Background="#1C273A"
+                          Margin="0,0,0,20"/>
+
+            <Grid>
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+
+
+                        <StackPanel 
+                          Orientation="Horizontal"
+                          VerticalAlignment="Center" Grid.Column="0">
+                            <materialDesign:PackIcon 
+                              x:Name="Warning"
+                              Width="16"
+                              Kind="Alert"
+                              Height="16"
+                              Margin="0,0,8,0"
+                              VerticalAlignment="Center"
+                              Foreground="{StaticResource AccentBlue}"/>
+
+                            <TextBlock
+                              Grid.Column ="0"
+                              FontSize="14"
+                              FontWeight="SemiBold"
+                              x:Name = "RestricationText"
+                              Foreground="{StaticResource TextPrimary}"
+                              Text="NSFW Sensitivity"
+                              VerticalAlignment="Center" Width="895"/>
+
+
+
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" >
+                            <Viewbox Height="23" HorizontalAlignment="Left" Margin="5,-2,3,-5">
+                                <Border BorderBrush="#B94A4A" 
+                                         BorderThickness="1" 
+                                         Name="Prozentkasten"
+                                         CornerRadius="6" 
+                                         Grid.Column="1"
+                                         Background="Transparent" 
+                                         Padding="10,3,10,4"
+                                         
+                                         HorizontalAlignment="Center"
+                                         VerticalAlignment="Center" MinWidth ="78">
+
+
+                                    <TextBlock Text="Maximum" 
+                                                 
+                                                Name="Prozentbeschreibung"
+                                                Foreground="#B94A4A" 
+                                                FontFamily="Segoe UI" 
+                                                FontSize="13" 
+                                                
+                                                FontWeight="Normal"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Stretch"
+                                                TextAlignment="Center"/>
+
+                                </Border>
+                            </Viewbox>
+
+
+                            <TextBlock
+                                x:Name="Restrictionnumber"
+                                Grid.Column="1"
+                                Text="51%"
+                                FontSize="14"
+                                FontWeight="Normal"
+                                Foreground="#bdd2de" 
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Margin="8,3,0,2"/>
+                        </StackPanel>
+
+
+
+                    </Grid>
+
+
+
+                    <TextBlock Text="Controls NSFW detection sensitivity — higher values block more content"
+                             Grid.Column="0" 
+                             FontSize="12"
+                             Foreground="{StaticResource TextSecondary}"/>
+
+
+
+                    <Slider x:Name="Slider" 
+                              Style="{StaticResource ModernSliderStyle}"
+                              Maximum="100"
+                              Value="50"
+                              Foreground="{StaticResource AccentBlue}" ValueChanged="Slider_ValueChanged"/>
+
+                    <Grid Height="32" Margin="0,-4,0,0" Width="Auto">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.85*"/>
+                            <ColumnDefinition Width="2.1*"/>
+                            <ColumnDefinition Width="2.1*"/>
+                            <ColumnDefinition Width="0.85*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0"
+                             Text="Permissive"
+                             FontSize="12"
+                             Foreground="{StaticResource TextSecondary}"
+                             HorizontalAlignment="Left"
+                             VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1"
+                             Text="Moderate"
+                             FontSize="12"
+                             Foreground="{StaticResource TextSecondary}"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center" />
+                        <TextBlock Grid.Column="2"
+                             Text="Strict"
+                             FontSize="12"
+                             Foreground="{StaticResource TextSecondary}"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="3"
+                             Text="Maximum"
+                             FontSize="12"
+                             Foreground="{StaticResource TextSecondary}"
+                             HorizontalAlignment="Right"
+                             VerticalAlignment="Center" />
+                    </Grid>
+                </StackPanel>
+            </Grid>
+
+            <Separator Background="#1C273A"
+                          Margin="0,15,0,20"/>
+
+            
+            <!--Grid Based Scanning -->
+            <Grid Margin="0,15,0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Grid-Based Scanning"
+                                            FontSize="14"
+                                            FontWeight="SemiBold"
+                                            Foreground="{StaticResource TextPrimary}"/>
+
+                    <TextBlock Text="Divides screen into zones for more accurate detection"
+                                            x:Name="GridScanningHintText"
+                                            FontSize="12"
+                                            Foreground="{StaticResource TextSecondary}"/>
+                </StackPanel>
+
+                <ToggleButton
+                                 x:Name="GridScanningToggle"
+                                 Grid.Column="1"
+                                 VerticalAlignment="Center"
+                        
+                                 Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                 Checked="GridScanningToggle_Checked"
+                                 Unchecked="GridScanningToggle_Unchecked" />
+            </Grid>
+
+            <!-- Scan Frequency  -->
+            <Separator Background="#1C273A" Margin="0,15,0,20"/>
+
+            <Grid Margin="0,0,0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                    <TextBlock Text="Scan Frequency"
+                               FontSize="14"
+                               FontWeight="SemiBold"
+                               Foreground="{StaticResource TextPrimary}"/>
+
+                    <TextBlock Text="How often the screen is analyzed"
+                               FontSize="12"
+                               Foreground="{StaticResource TextSecondary}"
+                               Margin="0,2,0,0"/>
+                </StackPanel>
+
+                <ComboBox x:Name="ScanFrequencyComboBox"
+                          Style="{StaticResource DarkComboBoxStyle}"
+                          MinWidth="250"
+                          Margin="20,10,0,10"
+                          Grid.Column="1"
+                          SelectedIndex="0"
+                          SelectionChanged="ScanFrequencyComboBox_SelectionChanged">
+                    <ComboBoxItem Content="Scan Frequency: High (More GPU usage)" />
+                    <ComboBoxItem Content="Scan Frequency: normal" />
+                    <ComboBoxItem Content="Scan Frequency: low" />
+                </ComboBox>
+            </Grid>
+
+            <Separator Background="#1C273A" Margin="0,0,0,20"/>
+
+            <Grid Margin="0,0,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                    <TextBlock Text="Detection Mode"
+                               FontSize="14"
+                               FontWeight="SemiBold"
+                               Foreground="{StaticResource TextPrimary}"/>
+
+                    <TextBlock Text="Overall aggressiveness of the AI"
+                               FontSize="12"
+                               Foreground="{StaticResource TextSecondary}"
+                               Margin="0,2,0,0"/>
+                </StackPanel>
+
+                <Border Grid.Column="1"
+                        Background="#1C273A"
+                        CornerRadius="10"
+                        VerticalAlignment="Center"
+                        ClipToBounds="True">
+                    <UniformGrid Rows="1">
+                        <RadioButton x:Name="Balanced"
+                             Content="Balanced"
+                             GroupName="DetectionModeGroup"
+                             Style="{StaticResource SegmentedRadioButtonStyle}"
+                             Checked="Balanced_Checked"/>
+
+                        <RadioButton x:Name="Strict"
+                             Content="Strict"
+                             GroupName="DetectionModeGroup"
+                             Style="{StaticResource SegmentedRadioButtonStyle}"
+                             Checked="Strict_Checked"/>
+
+                        <RadioButton x:Name="Maximum"
+                             Content="Maximum"
+                             GroupName="DetectionModeGroup"
+                             Style="{StaticResource SegmentedRadioButtonStyle}"
+                             Checked="Maximum_Checked"/>    
+                    </UniformGrid>
+                </Border>
+            </Grid>
+
+        </StackPanel>
+        
+    </Border>
+
+
+
+</UserControl>
