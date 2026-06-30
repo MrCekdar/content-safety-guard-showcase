@@ -54,7 +54,7 @@ This folder mirrors more of the real project structure for code review. It is st
 ```text
 Website category management
 Blocklist import pipeline
-DNS/hosts/WFP blocking providers
+Network-level blocking providers
 Generated blocklist data
 Commercial product logic
 Runtime user data and logs
